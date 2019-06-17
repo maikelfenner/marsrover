@@ -1,3 +1,4 @@
+import br.com.maikelfenner.Grid;
 import br.com.maikelfenner.Rover;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
@@ -15,7 +16,8 @@ public class RoverShould {
 
     @Before
     public void initialize() {
-        rover = new Rover();
+        Grid grid = new Grid();
+        rover = new Rover(grid);
     }
 
     @Test
