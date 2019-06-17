@@ -1,4 +1,4 @@
-Mars Rover Kata
+Mars br.com.maikelfenner.Rover Kata
 ===============
 
 Develop an API that moves a rover around on a grid.
