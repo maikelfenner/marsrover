@@ -1,3 +1,4 @@
+import br.com.maikelfenner.Coordinate;
 import br.com.maikelfenner.Grid;
 import br.com.maikelfenner.Rover;
 import junitparams.JUnitParamsRunner;
@@ -5,6 +6,8 @@ import junitparams.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -102,6 +105,20 @@ public class RoverShould {
             "RMMMMMMMMMMMMM, 3:0:E",
     })
     public void wrap_from_left_to_right_when_moving_west(String commands, String position) {
+        assertThat(rover.execute(commands), is(position));
+    }
+
+    @Test
+    @Parameters({
+            "MMMM, O:0:3:N",
+            "RMM, O:1:0:E"
+    })
+    public void stop_at_obstacle(String commands, String position) {
+        Coordinate obstacle_0x4 = new Coordinate(0, 4);
+        Coordinate obstacle_2x0 = new Coordinate(2, 0);
+        Grid grid = new Grid(Arrays.asList(obstacle_0x4, obstacle_2x0));
+        Rover rover = new Rover(grid);
+
         assertThat(rover.execute(commands), is(position));
     }
 }

@@ -1,10 +1,22 @@
 package br.com.maikelfenner;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 public class Grid {
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
 
-    Coordinate nextCoordinateFor(Coordinate coordinate, Direction direction) {
+    private List<Coordinate> obstacles = Collections.emptyList();
+
+    public Grid() {}
+
+    public Grid(List<Coordinate> obstacles) {
+        this.obstacles = obstacles;
+    }
+
+    Optional<Coordinate> nextCoordinateFor(Coordinate coordinate, Direction direction) {
         int x = coordinate.x();
         int y = coordinate.y();
 
@@ -24,6 +36,8 @@ public class Grid {
             x = ((x > 0) ? x : MAX_WIDTH) - 1;
         }
 
-        return new Coordinate(x, y);
+        Coordinate newCoordinate = new Coordinate(x, y);
+
+        return obstacles.contains(newCoordinate) ? Optional.empty() : Optional.of(newCoordinate);
     }
 }

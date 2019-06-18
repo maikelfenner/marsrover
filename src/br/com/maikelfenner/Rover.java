@@ -1,5 +1,7 @@
 package br.com.maikelfenner;
 
+import java.util.Optional;
+
 public class Rover {
 
     private Direction direction = Direction.NORTH;
@@ -11,6 +13,7 @@ public class Rover {
     }
 
     public String execute(String commands) {
+        String obstacleString = "";
 
         for (char c : commands.toCharArray()) {
             if (c == 'R') {
@@ -22,10 +25,19 @@ public class Rover {
             }
 
             if(c == 'M') {
-                coordinate = grid.nextCoordinateFor(coordinate, direction);
+                obstacleString = move();
             }
         }
         
-        return coordinate.x() + ":" + coordinate.y() + ":" + direction.value();
+        return obstacleString + coordinate.x() + ":" + coordinate.y() + ":" + direction.value();
+    }
+
+    private String move() {
+        Optional<Coordinate> nextCoordinate = grid.nextCoordinateFor(this.coordinate, this.direction);
+
+        nextCoordinate.ifPresent(nc -> this.coordinate = nc);
+
+        return nextCoordinate.isPresent() ? "" : "O:";
+
     }
 }
